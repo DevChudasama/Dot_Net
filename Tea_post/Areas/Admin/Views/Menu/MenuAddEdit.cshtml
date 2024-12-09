@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Title"] = "MenuAddEdit";
+}
+
+@model Tea_post.Areas.Admin.Models.MenuModel;
+<div class="layout-page">
+    <div class="container">
+        <div class="col-xl">
+            <div class="card my-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Menu</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="Menu" asp-area="Admin" asp-action="Save" enctype="multipart/form-data">
+                        @Html.HiddenFor(x => x.MenuID)
+                        @Html.HiddenFor(x => x.MenuImage)
+
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select type="text" class="form-select" asp-items="@(new SelectList(ViewBag.CategoryList,"CategoryID","CategoryName",Model.CategoryID))" name="CategoryID" placeholder="Category Name">
+                                <option>Select Category</option>
+                            </select>
+                            <span asp-validation-for="CategoryID" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="card-body">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+
+
+                                @if (!string.IsNullOrEmpty(Model.MenuImage))
+                                {
+                                    <div class="form-group">
+                                        <div>
+                                            <img src="@Model.MenuImage"
+                                                 alt="Menu-image"
+                                                 class="d-block rounded"
+                                                 height="100"
+                                                 width="100"
+                                                 id="uploadedAvatar" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-dark me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   asp-for="File"
+                                                   value="@Model.MenuImage" />
+                                        </label>
+                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+
+                                        <p class="text-muted mb-0">Allowed JPG, or PNG. Max size of 800K</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div id="uploadedAvatar" style="border: 2px dashed gray; width: 100px; height: 100px;"></div>
+
+                                    </div>
+
+
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-dark me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   asp-for="File"
+                                                   value="@Model.MenuImage" />
+                                        </label>
+                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+
+                                        <p class="text-muted mb-0">Allowed JPG, or PNG. Max size of 800K</p>
+                                    </div>
+                                }
+                                <span asp-validation-for="MenuImage" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+
+                            <input type="text"
+                                   id="basic-default-email"
+                                   class="form-control"
+                                   placeholder="john.doe"
+                                   asp-for="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <div class="input-group input-group-merge">
+
+                                <span class="input-group-text">&#8377</span>
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="100"
+                                       aria-label="Amount (to the nearest dollar)"
+                                       asp-for="Price" />
+                                <span class="input-group-text">.00</span>
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-default-message">Description</label>
+                            <textarea id="basic-default-message"
+                                      class="form-control"
+                                      placeholder="" asp-for="Description">
+                    </textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-info">Save</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Menu" asp-area="Admin">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

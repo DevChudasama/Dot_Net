@@ -1,0 +1,129 @@
+﻿@using System.Data
+ 
+<div class="layout-page">
+    <div class="container">
+        <h3 class="fw-bold py-3 my-2"><span class="text-muted fw-light">Social Media /</span> Social Media  List</h3>
+        <div class="d-flex justify-content-end align-items-end mx-4 my-2">
+            <a asp-area="Admin" asp-controller="SocialMedia" asp-action="Edit" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i>Add</a>
+        </div>
+
+        <form method="post" asp-area="Admin" asp-controller="SocialMedia" asp-action="Search">
+            <div class="row card my-4 p-2">
+                <h5 class="mt-1">Filter/Search</h5>
+                <div class=" d-flex mb-3 col-xl-4 col-md-4">
+                    <div class="col-md-10 mx-2">
+                        <label class="col-md-2 col-form-label">From</label>
+                        <input class="form-control" type="date" id="FromDate" name="startdate"/>
+                    </div>
+
+                    <div class="col-md-10">
+                        <label class="col-md-2 col-form-label">To</label>
+                        <input class="form-control" type="date" id="ToDate" name="enddate"/>
+                    </div>
+                </div>
+                <div class="m-2">
+                    <button type="submit" class="btn btn-info">Search</button>
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+
+            @{
+                if (Model.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in Model.Rows)
+                    {
+                        <div class="col">
+                            <div class="card h-100">
+                                <img class="card-img-top" src="@dr["SocialMediaImage"]" alt="Social Media image">
+                                <div class="card-body">
+                                    <p class="card-text"><strong>Created : </strong>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</p>
+                                    <p class="card-text"><strong>Modified : </strong>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</p>
+                                </div>
+                                <div class="row-lg-4 row-md-4 mx-2">
+                                    <a href="@dr["SocialMediaLink"]" class="btn btn-outline-dark"><i class='bx bx-link-external'></i>       Link</a>
+
+                                </div>
+                                <hr />
+                                <div class="d-flex m-2">
+                                    <form method="post" asp-controller="SocialMedia" asp-area="Admin" asp-action="Edit">
+
+                                        <input type="hidden" name="SocialMediaID" value="@Convert.ToInt32(dr["SocialMediaID"])" />
+                                        <button class="btn btn-icon btn-outline-info mx-1" type="submit">
+                                            <span class="tf-icons bx bxs-pencil"></span>
+                                        </button>
+                                    </form>
+
+                                    <form method="post" asp-controller="SocialMedia" asp-area="Admin" asp-action="Delete" class="DeleteSweetAlertBtn">
+                                        <input type="hidden" name="SocialMediaID" value="@Convert.ToInt32(dr["SocialMediaID"])" />
+                                        <button class="btn btn-icon btn-outline-danger mx-1" type="submit">
+                                            <span class="tf-icons bx bxs-trash"></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="container">
+                        <div class="row">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-lg-6 col-md-8 col-sm-10 ">
+                                    <div class="text-center">
+                                        <h3>No Data Found</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = String(today.getMonth() + 1).padStart(2, '0');
+            var day = String(today.getDate()).padStart(2, '0');
+            var date = year + '-' + month + '-' + day;
+
+            console.log("Date = " + date);
+            // Set the default value of the input field with id "FromDate" to today's date
+            $("#FromDate").val(date);
+
+            // Set the default value of the input field with id "ToDate" to today's date
+            $("#ToDate").val(date);
+
+        })
+
+        // $(document).ready(function () {
+        //     $("#sample_1").on("keyup", function () {
+        //         var value = $(this).val().toLowerCase();
+        //         $("#sample_2 tr").filter(function () {
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //         });
+        //     });
+        // });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+    </script>
+}

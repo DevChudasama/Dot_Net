@@ -1,0 +1,38 @@
+﻿@using System.Data
+
+@{
+    ViewData["Title"] = "_SocialMedia";
+}
+
+<!-- ======= Gallery Section ======= -->
+<section id="gallery" class="gallery">
+    <div class="container-fluid">
+
+        <div class="section-title">
+            <h2>teapostofficial</h2>
+            <p>
+                The Trust of Tea Lovers ☕<br>
+                Tag @@teapostofficial to get featured.
+            </p>
+        </div>
+
+        <div class="row g-0">
+            @if (Model.Rows.Count > 0)
+            {
+                <div class="col-lg-3 col-md-4">
+                    <div class="gallery-item">
+                        @foreach (DataRow dr in Model.Rows)
+                        {
+                            <a href="@dr["SocialMediaLink"]" class="gallery-lightbox">
+                                <img src="@dr["SocialMediaImage"]" alt="" class="img-fluid">
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+<!-- End Gallery Section -->
+

@@ -1,0 +1,97 @@
+﻿ 
+@model Tea_post.Areas.Admin.Models.SocialMediaModel;
+<div class="layout-page">
+    <div class="container">
+        <div class="col-xl">
+            <div class="card my-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Social Media</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="SocialMedia" asp-area="Admin" asp-action="Save" enctype="multipart/form-data">
+                        @Html.HiddenFor(x => x.SocialMediaID)
+                        @Html.HiddenFor(x => x.SocialMediaImage)
+                        <div class="card-body">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                @if (!string.IsNullOrEmpty(Model.SocialMediaImage))
+                                {
+                                    <div class="form-group">
+                                        <div>
+                                            <img src="@Model.SocialMediaImage"
+                                                 alt="SocialMedia-image"
+                                                 class="d-block rounded"
+                                                 height="100"
+                                                 width="100"
+                                                 id="uploadedAvatar" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-dark me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   asp-for="File"
+                                                   value="@Model.SocialMediaImage" />
+                                        </label>
+                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+
+                                        <p class="text-muted mb-0">Allowed JPG, or PNG. Max size of 800K</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div>
+                                            <img src="#"
+                                                 alt="SocialMedia-image"
+                                                 class="d-block rounded"
+                                                 height="100"
+                                                 width="100"
+                                                 id="uploadedAvatar" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-dark me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   asp-for="File"
+                                                   value="@Model.SocialMediaImage" />
+                                        </label>
+                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+
+                                        <p class="text-muted mb-0">Allowed JPG, or PNG. Max size of 800K</p>
+                                    </div>
+                                }
+                                <span asp-validation-for="SocialMediaImage" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">SocialMedia Link</label>
+                            <input class="form-control" type="url" id="html5-url-input" asp-for="SocialMediaLink">
+                            <span asp-validation-for="SocialMediaLink" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-info">Save</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="SocialMedia" asp-area="Admin">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

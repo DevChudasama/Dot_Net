@@ -1,0 +1,275 @@
+@using System.Data;
+@model DataTable;
+@{
+    int i = 1;
+    ViewData["Title"] = "LOC_StateList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Data Tables</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active">State</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<!--Search-->
+<div class="card px-3 py-3">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-10">
+            </div>
+            <form method="post" asp-controller="LOC_State" asp-area="LOC_State" asp-action="Search">
+                <div class="row">
+                    <div class="col">
+                        <label>
+                            Select by Country Name
+                            <select type="text" class="form-select" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" name="CountryID" placeholder="Country Name" id="" aria-controls="">
+                                <option>Select Country </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="col">
+                        <label>
+                            Search by State Name
+                            <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.StateName" name="StateName" placeholder="State Name" id="" aria-controls="" />
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label>
+                            Search by State Code
+                            <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.StateCode" name="StateCode" placeholder="State Code" id="" aria-controls="" />
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <input type="submit" class="btn btn-primary" />
+                <input type="reset" class="btn btn-secondary" asp-action="Index" asp-controller="LOC_State" />
+            </form>
+        </div>
+        <!--End Search-->
+    </div>
+</div>
+<br />
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col-2">
+                            <h2 class="card-title">State List</h2>
+                        </div>
+                        <div class="col-2 text-end">
+                            <a asp-controller="LOC_State" asp-area="LOC_State" asp-action="Add" class="btn btn-success mt-3">Add</a>
+                        </div>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr</th>
+                                <th scope="col">State Name</th>
+                                <th scope="col">State Code</th>
+                                <th scope="col">Country Name</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Modified</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample_2">
+                            @{
+                                if (Model.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td scope="row">@i</td>
+                                            <td>@dr["StateName"]</td>
+                                            <td>@dr["StateCode"]</td>
+                                            <td>@dr["CountryName"]</td>
+                                            <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                            <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                            <td>
+                                                <form method="post" asp-controller="LOC_State" asp-area="LOC_State" asp-action="Delete">
+                                                    <a class="btn btn-success" asp-controller="LOC_State" asp-area="LOC_State" asp-action="Edit" asp-route-StateID="@Convert.ToInt32(dr["StateID"])">
+                                                        <i class="bi bi-pen"></i>
+                                                    </a>
+                                                    <input type="hidden" name="StateID" value="@Convert.ToInt32(dr["StateID"])" />
+                                                    <button type="submit" class="btn btn-danger" onclick="return fun1();"><i class="bi bi-trash"></i></button>
+
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <p class="col-form-label">No Record Found</p>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts
+    {
+    <script>
+        // $(document).ready(function () {
+        //     $("#sample_1").on("keyup", function () {
+        //         var value = $(this).val().toLowerCase();
+        //         $("#sample_2 tr").filter(function () {
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //         });
+        //     });
+        // });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}
+
+@* ================================================================================================== *@
+
+@* <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>State List</h1>
+        </div>
+        <form method="post" asp-controller="LOC_State" asp-area="LOC_State" asp-action="Search">
+            <div class="row">
+                <div class="col">
+                    <label>
+                        Select by Country Name
+                        <select type="text" class="form-select" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))"  name="CountryID" placeholder="Country Name" id="" aria-controls="">
+                            <option>Select Country </option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="col">
+                    <label>
+                        Search by State Name
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.StateName" name="StateName" placeholder="State Name" id="" aria-controls="" />
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Search by State Code
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.StateCode" name="StateCode" placeholder="State Code" id="" aria-controls="" />
+                    </label>
+                </div>
+            </div>
+            <input type="submit" />
+            <input type="reset" />
+        </form>
+        <div>
+            <a asp-controller="LOC_State" asp-area="LOC_State" asp-action="Add" class="btn btn-success">Add</a>
+            <div id="sample_1_filter">
+                <label>
+                    Search
+                    <input type="text" class="form-control input-sm input-small input-inline" placeholder="" id="sample_1" aria-controls="sample_1" />
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<table class="table" id="sample_1">
+
+    <thead>
+        <tr>
+            <th>State ID</th>
+            <th>State Name</th>
+            <th>State Code</th>
+            <th>Country Name</th>
+            <th>Created</th>
+            <th>Modified</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="sample_2">
+        @{
+            if (Model.Rows.Count > 0)
+            {
+                foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        <td>@dr["StateID"]</td>
+                        <td>@dr["StateName"]</td>
+                        <td>@dr["StateCode"]</td>
+                        <td>@dr["CountryName"]</td>
+                        <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                        <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <form method="post" asp-controller="LOC_State" asp-area="LOC_State" asp-action="Delete">
+                                <input type="hidden" name="StateID" value="@Convert.ToInt32(dr["StateID"])" />
+                                <button type="submit" class="btn btn-danger" onclick="return fun1();">Delete</button>
+                                <a class="btn btn-success" asp-controller="LOC_State" asp-area="LOC_State" asp-action="Edit" asp-route-StateID="@Convert.ToInt32(dr["StateID"])">Edit</a>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <p class="col-form-label">No Record Found</p>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+} *@

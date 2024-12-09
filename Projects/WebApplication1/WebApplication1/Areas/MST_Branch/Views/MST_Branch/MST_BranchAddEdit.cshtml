@@ -1,0 +1,29 @@
+﻿@model WebApplication1.Areas.MST_Branch.Models.MST_BranchModel;
+@{
+    ViewData["Title"] = "MST_BranchAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>MST_BranchAddEdit</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="MST_Branch" asp-area="MST_Branch" asp-action="Save">
+            @Html.HiddenFor(x=>x.BranchID)
+            <div class="form-group">
+                <label>Branch Name</label>
+                <input type="text" class="form-control" asp-for="BranchName" placeholder="please Enter Branch Name" />
+            </div>
+            <div class="form-group">
+                <label>Branch Code</label> 
+                <input type="text" class="form-control" asp-for="BranchCode" placeholder="please Enter Branch Code" />
+            </div>
+        <hr />
+        <input type="submit"/>
+            <button class="formbold-btn" asp-action="Index" asp-controller="MST_Branch">
+                Back
+            </button>
+        </form>
+    </div>
+</div>
+

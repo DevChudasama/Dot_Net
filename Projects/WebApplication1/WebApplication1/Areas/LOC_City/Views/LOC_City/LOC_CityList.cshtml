@@ -1,0 +1,374 @@
+@using System.Data;
+@model DataTable;
+@{
+    int i = 1;
+    ViewData["Title"] = "LOC_CityList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<div class="pagetitle">
+    <h1>Data Tables</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active">City</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<!--Search-->
+<div class="card px-3 py-3">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-10">
+            </div>
+            <form method="post" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Search">
+                <div class="row">
+                    <div class="col">
+                        <label>
+                            Search by Country Name
+                            <select class="form-select" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" name="CountryID" placeholder="Country Name" onchange="fnOnCountryChange()" id="CountryID">
+                                <option>Select Country </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label>
+                            Search by State Name
+                            <select class="form-select " asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))" name="StateID" placeholder="State Name" id="StateID" aria-controls="">
+                                <option>Select State </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label>
+                            Search by City Name
+                            <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CityName" name="CityName" placeholder="City Name" id="" aria-controls="" />
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label>
+                            Search by City Code
+                            <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CityCode" name="CityCode" placeholder="City Code" id="" aria-controls="" />
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <input type="submit" class="btn btn-primary" />
+                <input type="reset" class="btn btn-secondary" asp-action="Index" asp-controller="LOC_City" />
+            </form>
+        </div>
+        <!--End Search-->
+    </div>
+</div>
+<br />
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col-2">
+                            <h2 class="card-title">City List</h2>
+                        </div>
+                        <div class="col-2 text-end">
+                            <a asp-controller="LOC_City" asp-area="LOC_City" asp-action="Add" class="btn btn-success mt-3">Add</a>
+                        </div>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr</th>
+                                <th scope="col">City Name</th>
+                                <th scope="col">City Code</th>
+                                <th scope="col">State ID</th>
+                                <th scope="col">Country ID</th>
+                                <th scope="col">Country Name</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Modified</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample_2">
+                            @{
+                                if (Model.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td scope="row">@i</td>
+                                            <td>@dr["CityName"]</td>
+                                            <td>@dr["CityCode"]</td>
+                                            <td>@dr["StateID"]</td>
+                                            <td>@dr["CountryID"]</td>
+                                            <td>@dr["CountryName"]</td>
+                                            <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
+                                            <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                            <td>
+                                                <form method="post" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Delete">
+                                                    <a class="btn btn-success" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Edit" asp-route-StateID="@Convert.ToInt32(dr["CityID"])">
+                                                        <i class="bi bi-pen"></i>
+                                                    </a>
+                                                    <input type="hidden" name="CityID" value="@Convert.ToInt32(dr["CityID"])" />
+                                                    <button type="submit" class="btn btn-danger" onclick="return fun1();"><i class="bi bi-trash"></i></button>
+
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <p class="col-form-label">No Record Found</p>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts
+    {
+    <script>
+        // $(document).ready(function () {
+        //     $("#sample_1").on("keyup", function () {
+        //         var value = $(this).val().toLowerCase();
+        //         $("#sample_2 tr").filter(function () {
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //         });
+        //     });
+
+
+        // });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function fnOnCountryChange() {
+            var CountryID = $("#CountryID").val();
+            console.log(CountryID);
+            if (CountryID !== "") {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+                $.ajax(
+                    {
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "@Url.Action("StateDropDown", "LOC_City")" + "?&CountryID=" + CountryID,
+                        data: {},
+                        dataType: "json",
+                        success: function (Result) {
+                            $.each(Result,
+                                function (key, value) {
+                                    console.log(value);
+
+                                    $("#StateID").append($("<option></option>").val(value.stateID).html(value.stateName));
+                                });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert("Error while loading combobox.");
+                        }
+                    });
+            } else {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+            }
+        }
+
+
+    </script>
+}
+
+@* =================================================================================================================== *@
+
+
+@*<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>City List</h1>
+        </div>
+        <form method="post" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Search">
+            <div class="row">
+                <div class="col">
+                    <label>
+                        Search by Country Name
+                        <select class="form-control" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" name="CountryID" placeholder="Country Name" onchange="fnOnCountryChange()" id="CountryID">
+                            <option>Select Country </option>
+                        </select>
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Search by State Name
+                        <select class="form-control " asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))" name="StateID" placeholder="State Name" id="StateID" aria-controls="">
+                            <option>Select State </option>
+                        </select>
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Search by City Name
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CityName" name="CityName" placeholder="City Name" id="" aria-controls="" />
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Search by City Code
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CityCode" name="CityCode" placeholder="City Code" id="" aria-controls="" />
+                    </label>
+                </div>
+            </div>
+            <input type="submit" />
+            <input type="reset" />
+        </form>
+        <div>
+            <a asp-controller="LOC_City" asp-area="LOC_City" asp-action="Add" class="btn btn-success">Add</a>
+            <div id="sample_1_filter">
+                <label>
+                    Search
+                    <input type="text" class="form-control input-sm input-small input-inline" placeholder="" id="sample_1" aria-controls="sample_1" />
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<table class="table" id="sample_1">
+
+    <thead>
+        <tr>
+            <th>City ID</th>
+            <th>City Name</th>
+            <th>City Code</th>
+            <th>State ID</th>
+            <th>Country ID</th>
+            <th>Country Name</th>
+            <th>Created</th>
+            <th>Modified</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="sample_2">
+        @{
+            if (Model.Rows.Count > 0)
+            {
+                foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        <td>@dr["CityID"]</td>
+                        <td>@dr["CityName"]</td>
+                        <td>@dr["CityCode"]</td>
+                        <td>@dr["StateID"]</td>
+                        <td>@dr["CountryID"]</td>
+                        <td>@dr["CountryName"]</td>
+                        <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
+                        <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <form method="post" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Delete">
+                                <input type="hidden" name="CityID" value="@Convert.ToInt32(dr["CityID"])" />
+                                <button type="submit" class="btn btn-danger" onclick="return fun1();">Delete</button>
+                                <a class="btn btn-success" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Edit" asp-route-CityID="@Convert.ToInt32(dr["CityID"])">Edit</a>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <p class="col-form-label">No Record Found</p>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+
+        });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function fnOnCountryChange() {
+            var CountryID = $("#CountryID").val();
+            console.log(CountryID);
+            if (CountryID !== "") {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+                $.ajax(
+                    {
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "@Url.Action("StateDropDown", "LOC_City")" + "?&CountryID=" + CountryID,
+                        data: {},
+                        dataType: "json",
+                        success: function (Result) {
+                            $.each(Result,
+                                function (key, value) {
+                                    console.log(value);
+
+                                    $("#StateID").append($("<option></option>").val(value.stateID).html(value.stateName));
+                                });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert("Error while loading combobox.");
+                        }
+                    });
+            } else {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+            }
+        }
+
+
+    </script>
+}
+ *@

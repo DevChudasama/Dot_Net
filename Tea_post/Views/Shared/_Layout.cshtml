@@ -1,0 +1,208 @@
+﻿@{
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Tea Post</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/Userside/Dashboard/img/logo.png" rel="icon">
+    <link href="~/Userside/Dashboard/img/logo.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,600,600i,700,700i|Satisfy|Comic+Neue:300,300i,400,400i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/Userside/Dashboard/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/Userside/Dashboard/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Userside/Dashboard/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/Userside/Dashboard/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/Userside/Dashboard/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/Userside/Dashboard/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/Userside/Dashboard/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Delicious
+    * Updated: Jan 09 2024 with Bootstrap v5.3.2
+    * Template URL: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Top Bar ======= -->
+    <section id="topbar" class="d-flex align-items-center fixed-top topbar-transparent">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-center justify-content-lg-start">
+            <i class="bi bi-phone d-flex align-items-center"><span>+91 12345 67891</span></i>
+            <i class="bi bi-clock ms-4 d-none d-lg-flex align-items-center"><span>Mon-Sat: 11:00 AM - 12:00 PM</span></i>
+        </div>
+    </section>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <div class="logo me-auto">
+                <h1><a asp-area="Website" asp-controller="Website" asp-action="Index">Tea Post</a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="~/Userside/Dashboard/img/logo.png" alt="" class="img-fluid"></a>-->
+            </div>
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" asp-area="Website" asp-controller="Website" asp-action="Index">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" asp-area="Website" asp-controller="Menu" asp-action="Index">Menu</a></li>
+                    <li><a class="nav-link scrollto" asp-area="Website" asp-controller="Blog" asp-action="Index">Blog</a></li>
+                    <li><a class="nav-link scrollto" asp-area="Website" asp-controller="SocialMedia" asp-action="Index">Social Media</a></li>
+                    <li><a class="nav-link scrollto" asp-area="Website" asp-controller="Contact" asp-action="Index">Contact</a></li>
+                    <!-- <li class="dropdown">
+                         <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                         <ul>
+                             <li><a href="#">Drop Down 1</a></li>
+                             <li class="dropdown">
+                                 <a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                                 <ul>
+                                     <li><a href="#">Deep Drop Down 1</a></li>
+                                     <li><a href="#">Deep Drop Down 2</a></li>
+                                     <li><a href="#">Deep Drop Down 3</a></li>
+                                     <li><a href="#">Deep Drop Down 4</a></li>
+                                     <li><a href="#">Deep Drop Down 5</a></li>
+                                 </ul>
+                             </li>
+                             <li><a href="#">Drop Down 2</a></li>
+                             <li><a href="#">Drop Down 3</a></li>
+                             <li><a href="#">Drop Down 4</a></li>
+                         </ul>
+                     </li>-->
+                    
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+            <a class="book-a-table-btn" asp-area="Account" asp-controller="Account" asp-action="Logout">
+                <i class='bx bx-log-out'></i>
+                Log out
+            </a>
+
+        </div>
+    </header><!-- End Header -->
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+        <div class="hero-container">
+            <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+                <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+                <div class="carousel-inner" role="listbox">
+
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active" style="background-image: url(/Userside/Dashboard/img/slide/slide-1.jpg);">
+                        <div class="carousel-container">
+                            <div class="carousel-content">
+                                <h2 class="animate__animated animate__fadeInDown"><span>Delicious</span> Restaurant</h2>
+                                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                                <div>
+                                    @* <a asp-area="Website" asp-controller="Menu" asp-action="Index" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Menu</a> *@
+                                    <!--<a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-item" style="background-image: url(/Userside/Dashboard/img/slide/slide-2.jpg);">
+                        <div class="carousel-container">
+                            <div class="carousel-content">
+                                <h2 class="animate__animated animate__fadeInDown">Lorem Ipsum Dolor</h2>
+                                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                                <div>
+                                    <a asp-area="Website" asp-controller="Menu" asp-action="Index" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Menu</a>
+                                    <!--<a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-item" style="background-image: url(/Userside/Dashboard/img/slide/slide-3.jpg);">
+                        <div class="carousel-container">
+                            <div class="carousel-content">
+                                <h2 class="animate__animated animate__fadeInDown">Sequi ea ut et est quaerat</h2>
+                                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                                <div>
+                                    @* <a asp-area="Website" asp-controller="Menu" asp-action="Index" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Menu</a> *@
+                                    <!--<a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+                </a>
+
+                <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Hero -->
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <h3>Tea Post</h3>
+            <p>"Discover the magic of chai, the heartbeat of every Indian household."</p>
+            <div class="social-links">
+                <a href="https://twitter.com/teapostofficial" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/teapostofficial" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/teapostofficial" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://in.linkedin.com/company/tea-post" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; Copyright <strong><span>Tea Post</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+   <!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/Userside/Dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Userside/Dashboard/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/Userside/Dashboard/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/Userside/Dashboard/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/Userside/Dashboard/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/Userside/Dashboard/js/main.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+
+</html>

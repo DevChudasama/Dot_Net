@@ -1,0 +1,96 @@
+﻿@model WebApplication1.Areas.MST_Student.Models.MST_StudentModel;
+@{
+    ViewData["Title"] = "MST_StudentAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>MST_StudentAddEdit</h1>
+@*add branch name and cirty name*@
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="MST_Student" asp-area="MST_Student" asp-action="Save">
+            @Html.HiddenFor(x=>x.StudentID)
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" class="form-control" asp-for="StudentName" placeholder="please Enter Student Name" />
+            </div>
+            <div class="form-group">
+                <label>Student Mobile number</label>
+                <input type="text" class="form-control" asp-for="MobileNoStudent" placeholder="please Enter Student Mobile number" />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" asp-for="Email" placeholder="please Enter Email" />
+            </div>
+            <div class="form-group">
+                <label>Father Mobile</label>
+                <input type="text" class="form-control" asp-for="MobileNoFather" placeholder="please Enter Father Mobile" />
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" class="form-control" asp-for="Address" placeholder="please Enter Address" />
+            </div>
+            <div class="form-group">
+                <label>Birth Date</label>
+                <input type="date" class="form-control" asp-for="BirthDate" placeholder="please Enter Birth Date" />
+            </div>
+            <div class="form-group">
+                <label>Age</label>
+                <input type="text" class="form-control" asp-for="Age" placeholder="please Enter Age" />
+            </div>
+            <div class="form-group">
+                <label>City</label>
+                <select class="form-control form-input-sm" asp-for="CityID" asp-items="@(new SelectList(ViewBag.Citylist,"CityID","CityName"))"   placeholder="CityName"   aria-controls="">
+                    <option>Select City Name</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Branch</label>
+                <select class="form-control form-input-sm" asp-for="BranchID" asp-items="@(new SelectList(ViewBag.Branchlist,"BranchID","BranchName"))" placeholder="Branch Name" aria-controls="">
+                    <option>Select Branch Name</option>
+                </select>
+            </div>
+            <div class="w-50">
+                <lable>Active</lable>
+
+                <div class="gender-option">
+                    <div class="gender">
+                        <input type="radio" id="isActiveYes" name="IsActive" value="True" checked asp-for="IsActive" />
+                        <label for="isActiveYes">Yes</label>
+                    </div>
+                    <div class="gender">
+                        <input type="radio" id="isActiveNO" value="False" asp-for="IsActive" name="IsActive" />
+                        <label for="isActiveNO">No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <lable>Gender</lable>
+
+                <div class="gender-option">
+                    <div class="gender">
+                        <input type="radio" id="check-male" name="gender" value="Male" checked asp-for="Gender" />
+                        <label for="check-male">Male</label>
+                    </div>
+                    <div class="gender">
+                        <input type="radio" id="check-female" value="Female" name="gender" asp-for="Gender" />
+                        <label for="check-female">Female</label>
+                    </div>
+                    <div class="gender">
+                        <input type="radio" id="check-other" value="Other" name="gender" asp-for="Gender" />
+                        <label for="check-other">prefer not to say</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" class="form-control" asp-for="Password" placeholder="please Enter Password" />
+            </div>
+            <hr />
+            <input type="submit" />
+            <button class="formbold-btn" asp-action="Index" asp-controller="MST_Student">
+                Back
+            </button>
+        </form>
+    </div>
+</div>

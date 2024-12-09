@@ -1,0 +1,83 @@
+@{
+    ViewData["Title"] = "LOC_CityAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model WebApplication1.Areas.LOC_City.Models.LOC_CityModel;
+
+<h1>LOC_CityAddEdit</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="LOC_City" asp-area="LOC_City" asp-action="Save">
+            @Html.HiddenFor(x=>x.CityID)
+
+            <div class="form-group">
+                <label>City Name</label>
+                <input type="text" class="form-control" asp-for="CityName" placeholder="please Enter City Name" />
+            </div>
+            <div class="form-group">
+                <label>City Code</label>
+                <input type="text" class="form-control" asp-for="CityCode" placeholder="please Enter City Code" />
+            </div>
+            <div class="form-group">
+                <label>Country ID</label>
+                <select class="form-control" asp-for="CountryID"  asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" name="CountryID" placeholder="Country Name" onchange="fnOnCountryChange()" id="CountryID">
+                    <option>Select Country </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>State ID</label>
+                <select class="form-control" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))" name="StateID" placeholder="State Name"   id="StateID">
+                    <option>Select Country </option>
+                </select>
+            </div>
+           
+            <hr />
+            <input type="submit" />
+            <button class="formbold-btn" asp-action="Index" asp-controller="LOC_City">
+                Back
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+          
+        function fnOnCountryChange() {
+            var CountryID = $("#CountryID").val();
+            console.log(CountryID);
+            if (CountryID !== "") {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+                $.ajax(
+                    {
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "@Url.Action("StateDropDown", "LOC_City")" + "?&CountryID=" + CountryID,
+                        data: {},
+                        dataType: "json",
+                        success: function (Result) {
+                            $.each(Result,
+                                function (key, value) {
+                                    console.log(value);
+
+                                    $("#StateID").append($("<option></option>").val(value.stateID).html(value.stateName));
+                                });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert("Error while loading combobox.");
+                        }
+                    });
+            } else {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+            }
+        }
+
+
+    </script>
+}

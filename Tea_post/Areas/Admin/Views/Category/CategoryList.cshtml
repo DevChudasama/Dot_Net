@@ -1,0 +1,111 @@
+﻿@using System.Data
+@{
+    ViewData["Title"] = "CategoryList";
+    int i = 1;
+}
+
+<!-- Responsive Table -->
+<div class="layout-page">
+    <div class="container">
+        <h3 class="fw-bold py-3 my-2"><span class="text-muted fw-light">Menu /</span> Category List</h3>
+        <div class="card">
+            <div class="row m-2">
+                <div class="justify-content-start col-xl-4">
+                    <input class="form-control" type="search" placeholder="Search ..." id="html5-search-input">
+                </div>
+
+                <div class="justify-content-end align-items-end col-4">
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Add" class="btn btn-success">Add</a>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover" id="sample_2">
+                    <thead>
+                        <tr>
+                            <th>Sr</th>
+                            <th>CategoryName</th>
+                            <th>Created</th>
+                            <th>Modified</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @{
+                            if (Model.Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in Model.Rows)
+                                {
+
+                                    <tr>
+                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@i</strong></td>
+                                        <td>@dr["CategoryName"]</td>
+
+                                        <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                        <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <form method="post" asp-controller="Category" asp-area="Admin" asp-action="Edit">
+                                                    <input type="hidden" name="CategoryID" value="@Convert.ToInt32(dr["CategoryID"])" />
+                                                    <button class="btn btn-icon btn-outline-info mx-1" type="submit">
+                                                        <span class="tf-icons bx bxs-pencil"></span>
+                                                    </button>
+                                                </form>
+                                                <form method="post" asp-controller="Category" asp-area="Admin" asp-action="Delete" class="DeleteSweetAlertBtn">
+                                                    <input type="hidden" name="CategoryID" value="@Convert.ToInt32(dr["CategoryID"])" />
+                                                    <button class="btn btn-icon btn-outline-danger mx-1" type="submit">
+                                                        <span class="tf-icons bx bxs-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    i++;
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <p class="col-form-label"><strong>No Record Found</strong></p>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#html5-search-input").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+    </script>
+}
+

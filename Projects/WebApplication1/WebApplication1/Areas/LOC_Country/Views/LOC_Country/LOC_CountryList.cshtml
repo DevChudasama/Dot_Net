@@ -1,0 +1,262 @@
+﻿@using System.Data;
+@model DataTable;
+
+@{
+    int i = 1;
+    ViewData["Title"] = "LOC_CountryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Data Tables</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active">Country</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="card px-3 py-3">
+    <partial name="_SearchCountry" />
+  
+      @*   <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <form method="post" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Search">
+                    <div class="row">
+                        <div class="col">
+                            <label>
+                                Search by Country Name
+                                <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CountryName" name="CountryName" placeholder="Country Name" id="" aria-controls="" />
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label>
+                                Search by Country code
+                                <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CountryCode" name="CountryCode" placeholder="Country Code" id="" aria-controls="" />
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                    <input type="submit" class="btn btn-primary" />
+                    <input type="reset" class="btn btn-secondary" asp-action="Index" asp-controller="LOC_Country" />
+                </form>
+            </div>
+            <!--End Search-->
+        </div> *@
+    </div>
+
+
+
+<br />
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col-2">
+                            <h2 class="card-title">Country List</h2>
+                        </div>
+                        <div class="col-2 text-end">
+                            <a asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Add" class="btn btn-success mt-3">Add</a>
+                        </div>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr</th>
+                                <th scope="col">Country Name</th>
+                                <th scope="col">Country Code</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Modified</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample_2">
+                            @{
+                                if (Model.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in Model.Rows)
+                                    {
+                                        <tr>
+                                            <th scope="row">@i</th>
+                                            <td>@dr["CountryName"]</td>
+                                            <td>@dr["CountryCode"]</td>
+                                            <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                            <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                            <td>
+                                                <form method="post" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Delete">
+                                                    <a class="btn btn-success" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Edit" asp-route-CountryID="@Convert.ToInt32(dr["CountryID"])">
+                                                        <i class="bi bi-pen"></i>
+                                                    </a>
+                                                    <input type="hidden" name="CountryID" value="@Convert.ToInt32(dr["CountryID"])" />
+                                                    <button type="submit" class="btn btn-danger" onclick="return fun1();"><i class="bi bi-trash"></i></button>
+
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <p class="col-form-label">No Record Found</p>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts
+    {
+    <script>
+        // $(document).ready(function () {
+        //     $("#sample_1").on("keyup", function () {
+        //         var value = $(this).val().toLowerCase();
+        //         $("#sample_2 tr").filter(function () {
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //         });
+        //     });
+        // });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}
+@*======================================================================================= *@
+
+@* <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Country List</h1>
+        </div>
+        <form method="post" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Search">
+            <div class="row">
+                <div class="col">
+                    <label>
+                        Search by Country Name
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CountryName" name="CountryName" placeholder="Country Name" id="" aria-controls="" />
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Search by Country code
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CountryCode" name="CountryCode" placeholder="Country Code" id="" aria-controls="" />
+                    </label>
+                </div>
+            </div>
+            <input type="submit" />
+            <input type="reset" />
+        </form>
+    </div>
+    <div>
+        <div id="sample_1_filter">
+            <label>
+                Search
+                <input type="text" class="form-control input-sm input-small input-inline" placeholder="" id="sample_1" aria-controls="sample_1" />
+            </label>
+        </div>
+        <a asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Add" class="btn btn-success col-4">Add</a>
+    </div>
+
+</div>
+
+<table class="table" id="sample_1">
+
+    <thead>
+        <tr>
+            <th scope="col">Country ID</th>
+            <th scope="col">Country Name</th>
+            <th scope="col">Country Code</th>
+            <th scope="col">Created</th>
+            <th scope="col">Modified</th>
+            <th scope="col">Actions</th>
+        </tr>
+
+    </thead>
+    <tbody id="sample_2">
+        @{
+            if (Model.Rows.Count > 0)
+            {
+                foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        <td>@dr["CountryID"]</td>
+                        <td>@dr["CountryName"]</td>
+                        <td>@dr["CountryCode"]</td>
+                        <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                        <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <form method="post" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Delete">
+                                <input type="hidden" name="CountryID" value="@Convert.ToInt32(dr["CountryID"])" />
+                                <button type="submit" class="btn btn-danger" onclick="return fun1();">Delete</button>
+                                <a class="btn btn-success" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Edit" asp-route-CountryID="@Convert.ToInt32(dr["CountryID"])">Edit</a>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <p class="col-form-label">No Record Found</p>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}
+ *@
+
+@* ======================================================================================================================== *@

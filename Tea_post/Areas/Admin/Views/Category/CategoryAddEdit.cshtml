@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "CategoryAddEdit";
+}
+
+@model Tea_post.Areas.Admin.Models.CategoryModel;
+
+<div class="layout-page">
+    <div class="container my-4">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Category</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="Category" asp-area="Admin" asp-action="Save">
+                        @Html.HiddenFor(x => x.CategoryID)
+
+                        <div class="mb-3">
+                            <label class="form-label">Category Name</label>
+                            <input type="text"
+                                   id="basic-default-email"
+                                   class="form-control"
+                                   placeholder="Cold Drinks"
+                                   asp-for="CategoryName" />
+                            <span asp-validation-for="CategoryName" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-info">Save</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Category" asp-area="Admin">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

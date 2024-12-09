@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "BlogAddEdit";
+}
+
+@model Tea_post.Areas.Admin.Models.BlogModel;
+<div class="layout-page">
+    <div class="container">
+        <div class="col-xl">
+            <div class="card my-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Blog</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="Blog" asp-area="Admin" asp-action="Save" enctype="multipart/form-data">
+                        @Html.HiddenFor(x => x.BlogID)
+                        @Html.HiddenFor(x => x.BlogImage)
+                        @* @Html.HiddenFor(x => x.UserID)   *@
+                        <div class="mb-3">
+                            <label class="form-label">User</label>
+                            <select class="form-select" asp-items="@(new SelectList(ViewBag.UserList,"UserID","UserName",Model.UserID))" name="UserID">
+                                <option>Select User </option>
+                            </select>
+                            <span asp-validation-for="UserID" class="text-danger"></span>
+                        </div>
+                        @* <div class="mb-3">
+                        <label class="form-label" for="basic-default-company">Blog Image</label>
+                        <input type="text" class="form-control" id="basic-default-company" placeholder="Image url/path" asp-for="BlogImage" />
+                        <span asp-validation-for="BlogImage" class="text-danger"></span>
+                        </div> *@
+                        <div class="card-body">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+
+
+                                @if (!string.IsNullOrEmpty(Model.BlogImage))
+                                {
+                                    <div class="form-group">
+                                        <div>
+                                            <img src="@Model.BlogImage"
+                                                 alt="Blog-image"
+                                                 class="d-block rounded"
+                                                 height="100"
+                                                 width="100"
+                                                 id="uploadedAvatar" />
+                                        </div>
+                                    </div>
+                                    @*                                     <div class="form-group">
+                                <label asp-for="File">select new file</label><br>
+                                <input asp-for="File" type="file" class="form-control-file" value="@Model.BlogImage">
+                                <span asp-validation-for="File" class="text-danger"></span>
+                                </div> *@
+
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-dark me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   asp-for="File"
+                                                   value="@Model.BlogImage" />
+                                        </label>
+                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+
+                                        <p class="text-muted mb-0">Allowed JPG, or PNG. Max size of 800K</p>
+                                    </div>
+                                    <span asp-validation-for="BlogImage" class="text-danger"></span>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div>
+                                            <img src="@Model.BlogImage"
+                                                 alt="Blog-image"
+                                                 class="d-block rounded"
+                                                 height="100"
+                                                 width="100"
+                                                 id="uploadedAvatar" />
+                                        </div>
+                                    </div>
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-dark me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   asp-for="File"
+                                                   value="@Model.BlogImage" />
+                                        </label>
+                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+
+                                        <p class="text-muted mb-0">Allowed JPG, or PNG. Max size of 800K</p>
+                                    </div>
+                                    <span asp-validation-for="BlogImage" class="text-danger"></span>
+                                }
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text"
+                                   id="basic-default-email"
+                                   class="form-control"
+                                   placeholder="john.doe"
+                                   asp-for="Title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-default-message">Content</label>
+                            <textarea id="basic-default-message"
+                                      class="form-control"
+                                      placeholder="Blog detail" asp-for="Content">
+                          </textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-info">Save</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Blog" asp-area="Admin">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+        <script>
+        $(document).ready(() => {
+            const photoInp = $("#upload");
+            let file;
+
+            $('#formBtn').click((e) => {
+                e.preventDefault();
+                if (file) {
+                    alert("The image is uploaded successfully!!");
+                }
+                else {
+                    alert("Please select a Image first!!");
+                }
+
+            });
+
+            photoInp.change(function (e) {
+                file = this.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        $("#uploadedAvatar")
+                            .attr("src", event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,26 @@
+﻿<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+        </div>
+        <form method="post" asp-controller="LOC_Country" asp-area="LOC_Country" asp-action="Search">
+            <div class="row">
+                <div class="col">
+                    <label>
+                        Search by Country Name
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CountryName" name="CountryName" placeholder="Country Name" id="" aria-controls="" />
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Search by Country code
+                        <input type="text" class="form-control input-sm input-small input-inline" value="@ViewBag.CountryCode" name="CountryCode" placeholder="Country Code" id="" aria-controls="" />
+                    </label>
+                </div>
+            </div>
+            <br />
+            <input type="submit" class="btn btn-primary" />
+            <input type="reset" class="btn btn-secondary" asp-action="Index" asp-controller="LOC_Country" />
+        </form>
+    </div>
+    <!--End Search-->
+</div>

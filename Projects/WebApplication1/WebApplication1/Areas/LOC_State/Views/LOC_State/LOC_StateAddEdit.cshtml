@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "LOC_StateAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model WebApplication1.Areas.LOC_State.Models.LOC_StateModel;
+
+<h1>LOC_StateAddEdit</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post"asp-controller="LOC_State" asp-area="LOC_State" asp-action="Save">
+            @Html.HiddenFor(x=>x.StateID)
+            <div class="form-group">
+                <label>State Name</label>
+                <input type="text" class="form-control" asp-for="StateName" placeholder="please Enter State Name" />
+            </div>
+            <div class="form-group">
+                <label>State Code</label>
+                <input type="text" class="form-control" asp-for="StateCode" placeholder="please Enter State Code" />
+            </div>
+            <div class="form-group">
+                <label>Country ID</label>
+                @* <input type="text" class="form-control" asp-for="CountryID" placeholder="please Enter Country ID" /> *@
+                <select class="form-control" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" name="CountryID" placeholder="Country Name" onchange="fnOnCountryChange()" id="CountryID">
+                    <option>Select Country </option>
+                </select>
+            </div>
+           
+            <hr />
+            <input type="submit" />
+            <button class="formbold-btn" asp-action="Index" asp-controller="LOC_State">
+                Back
+            </button>
+        </form>
+    </div>
+</div>
